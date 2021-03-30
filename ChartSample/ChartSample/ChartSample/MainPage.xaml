@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:syncfusion="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms" xmlns:local="clr-namespace:ChartSample"
+             x:Class="ChartSample.MainPage">
+    <ContentPage.BindingContext>
+        <local:ViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+            <ResourceDictionary>
+                <syncfusion:ChartColorCollection x:Key="Colors">
+                <Color>#0078DE</Color>
+                <Color>#00CC6A</Color>
+                <Color>#B146C2</Color>
+                <Color>#FFB900</Color>
+                <Color>#7A7574</Color>
+                </syncfusion:ChartColorCollection>
+            </ResourceDictionary>
+        <DataTemplate x:Key="tooltipTemplate">
+            <Grid>
+                <Label TextColor="White">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0} : {1}">
+                            <Binding Path="Category"/>
+                            <Binding Path="Value"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <StackLayout>
+        <local:ChartExt PointerLength="23" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" ShowMajorGridLines="False"/>
+            </syncfusion:SfChart.PrimaryAxis>
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis ShowMajorGridLines="False" ShowMinorGridLines="False"/>
+            </syncfusion:SfChart.SecondaryAxis>
+            <syncfusion:ColumnSeries  EnableTooltip="True" TooltipTemplate="{StaticResource tooltipTemplate}" ItemsSource="{Binding Data}" XBindingPath="Category" YBindingPath="Value">
+                <syncfusion:ColumnSeries.ColorModel>
+                    <syncfusion:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}"/>
+                </syncfusion:ColumnSeries.ColorModel>
+            </syncfusion:ColumnSeries>
+            <local:ChartExt.ChartBehaviors>
+                <syncfusion:ChartTooltipBehavior BackgroundColor="Black"/>
+            </local:ChartExt.ChartBehaviors>
+        </local:ChartExt>
+    </StackLayout>
+
+</ContentPage>
